@@ -180,31 +180,6 @@ print(dtu2(0))
 
 
 
-;;;;;;;;;exponentila fit;;;;;;;;;
-
-;---Exponential fit
-
-  ;tt  =ispan(0,20,1)
-  ;eval=0.3679176   ; (e^-1)
-
-  ;efit1  = exponential_curve_fit(tt, ccr2({0:20}), 0, False)
-  ;efit2  = exponential_curve_fit(tt, ccr3({0:20}), 0, False)
-
-
-  ;A1     = efit1(0)
-  ;B1     = efit1(1)
-  ;A2     = efit2(0)
-  ;B2     = efit2(1)
-
-
-  ;tau1=(log(eval)-log(A1))/B1
-  ;tau2=(log(eval)-log(A2))/B2
-
-
-  ;print("tau1= "+tau1)
-  ;print("tau2= "+tau2)
-
-
 ;;; Autocor
 
 
