@@ -13,7 +13,7 @@ where \( t \) denotes time (in days) and \( \epsilon \) is white noise distribut
 
 
 <p align="center">
-  <img src="Ks_January_mean.png" width="700">
+  <img src="[Ks_January_mean.png](https://github.com/sandrolubis/stochastic_PAM_model/blob/main/examples/propagating_anmode.png)" width="700">
 </p>
 
 
