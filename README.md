@@ -12,3 +12,8 @@ $\tilde{m}_2(t) = 0.6\tilde{m}_2(t - 2) - 0.3\tilde{m}_2(t - 1) + \epsilon_2(t)$
 where \( t \) denotes time (in days) and \( \epsilon \) is white noise distributed uniformly between \(-1\) and \(+1\).
 
 
+<p align="center">
+  <img src="Ks_January_mean.png" width="700">
+</p>
+
+
