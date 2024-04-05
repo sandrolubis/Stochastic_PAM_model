@@ -1,70 +1,43 @@
-;Generate m_tilda
+  ; Generate noise
+  ns1 = random_uniform(-1, 1, 500000)
+  ns2 = random_uniform(-1, 1, 500000)
 
-ns1= random_uniform(-1, 1, 500000) 
-ns2= random_uniform(-1, 1, 500000) 
+  ; Allocate memory for variables
+  m_til1 = new(dimsizes(ns1), "float")
+  m_til2 = new(dimsizes(ns2), "float")
+  u1 = new(dimsizes(ns1), "float")
+  u2 = new(dimsizes(ns2), "float")
+  m1 = new(dimsizes(ns1), "float")
+  m2 = new(dimsizes(ns2), "float")
 
-;print(ns)
+  ; Initial conditions
+  m_til1(0) = -1.
+  m_til1(1) = 0.5
+  m_til2(0) = 1.
+  m_til2(1) = 0.5
+  u1(0) = 10.
+  u2(0) = 10.
 
-m_til1=new((/dimsizes(ns1)/),float)
-m_til2=m_til1
+  ; Constants (feedbacks, damping etc)
+  F1 = 1./9.
+  F2 = 1./8.
+  b11 = 0.04
+  b12 = 0.052
+  b21 = -0.025
+  b22 = 0.00
 
-;intial values
-
-m_til1(0)=-1.
-m_til1(1)=0.5
-
-m_til2(0)=1.
-m_til2(1)=0.5
-
-  do t=2, dimsizes(ns1)-1
-    m_til1(t)=0.6*m_til1(t-1) - 0.3*m_til1(t-2) + ns1(t)
-    m_til2(t)=0.6*m_til2(t-1) - 0.3*m_til2(t-2) + ns2(t)
+  ; Update m_tilda, u, and m iteratively
+  do t = 2, dimsizes(ns1) - 1
+    m_til1(t) = 0.6 * m_til1(t - 1) - 0.3 * m_til1(t - 2) + ns1(t)
+    m_til2(t) = 0.6 * m_til2(t - 1) - 0.3 * m_til2(t - 2) + ns2(t)
   end do
 
-;m_til1=random_uniform(-1, 1, 30000)
-;m_til2=random_uniform(-1, 1, 30000)
-
-
-;generate synthetic data u and m
-
-ut1=new((/dimsizes(ns1)/),float)
-u1 =new((/dimsizes(ns1)/),float)
-m1 =new((/dimsizes(ns1)/),float)
-
-ut2=new((/dimsizes(ns1)/),float)
-u2 =new((/dimsizes(ns1)/),float)
-m2 =new((/dimsizes(ns1)/),float)
-
-F1=1./9.
-F2=1./8.
-
-;imposed feedbacks
-
-b11 =  0.04 
-b12 =  0.052  ;*0
-b21 = -0.025 ;*0
-b22 =  0.00
-
-;real
-
-;b11 = 0.03775075 
-;b12 = 0.05863772   *0
-;b21 = -0.01757893  *0
-;b22 =  0.0264
-
-
-u1(0)= 10.   ;initial value
-u2(0)= 10.   ;initial value
-
-  do t=1, dimsizes(ns1)-1
-    m1 (t) = m_til1(t) + b11*u1(t-1) + b12*u2(t-1)
-    m2 (t) = m_til2(t) + b21*u1(t-1) + b22*u2(t-1)
-    ut1(t) = m1(t) - F1*u1(t-1)
-    ut2(t) = m2(t) - F2*u2(t-1)
-    u1 (t) = ut1(t)+u1(t-1)
-    u2 (t) = ut2(t)+u2(t-1)        
+  do t = 1, dimsizes(ns1) - 1
+    m1(t) = m_til1(t) + b11 * u1(t - 1) + b12 * u2(t - 1)
+    m2(t) = m_til2(t) + b21 * u1(t - 1) + b22 * u2(t - 1)
+    u1(t) = u1(t - 1) + (m1(t) - F1 * u1(t - 1))
+    u2(t) = u2(t - 1) + (m2(t) - F2 * u2(t - 1))
   end do
-
 
 
 ;cross correlation
